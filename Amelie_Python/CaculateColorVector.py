@@ -1,6 +1,8 @@
 from PIL import Image
 from numpy import *
 import colorsys
+from matplotlib import pyplot as plt
+import cv2
 import datetime
 from PIL import ImageFile
 
@@ -45,6 +47,10 @@ def compress_hsv(h, s, v):
 
     return H, S, V
 
+def normalize(l):
+    s = sum(l) * 1.0
+    return [e/s for e in l]
+
 def get_color_feature(image_path):
     try:
         img = Image.open(image_path)
@@ -56,6 +62,7 @@ def get_color_feature(image_path):
         return []
 
     wl = [0]*72
+    for_show = []
     for count, (r, g, b) in img.getcolors(img.size[0]*img.size[1]):
         h, s, v = colorsys.rgb_to_hsv(r/255.0, g/255.0, b/255.0)
         h = int(h*360)
@@ -65,6 +72,22 @@ def get_color_feature(image_path):
         W = 9*H + 3*S + V
         assert W < 72
         wl[W] = wl[W] + count
+        for i in xrange(count):
+            for_show.append(W)
 
     print wl
-    print sum(wl)
+    wl = normalize(wl)
+    # print wl
+    plt.hist(for_show, 72, normed = True, color = 'gray')
+    # # plt.xlim([0,72])
+    # # plt.legend(('cdf','histogram'), loc = 'upper left')
+    plt.show()
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    # # print sum(wl)
+
+if __name__ == '__main__':
+    # get_color_feature('/Users/ligang/170_0.jpg')
+    # get_color_feature('/Users/ligang/183_0.jpg')
+    get_color_feature('/Users/ligang/189_0.jpg')

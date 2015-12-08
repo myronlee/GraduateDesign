@@ -121,11 +121,11 @@ hist,bins = np.histogram(transformed_img.flatten(),no_of_pixel_values + 1,[0,no_
 cdf = hist.cumsum()
 cdf_normalized = cdf * hist.max()/ cdf.max()
 
-plt.plot(cdf_normalized, color = 'b')
+# plt.plot(cdf_normalized, color = 'b')
 plt.show()
-plt.hist(transformed_img.flatten(),no_of_pixel_values,[0,no_of_pixel_values], color = 'g')
-plt.xlim([0,no_of_pixel_values])
-plt.legend(('cdf','histogram'), loc = 'upper left')
+plt.hist(transformed_img.flatten(),no_of_pixel_values,[0,no_of_pixel_values], normed=True, color = 'gray')
+# plt.xlim([0,no_of_pixel_values])
+# plt.legend(('cdf','histogram'), loc = 'upper left')
 plt.show()
 
 cv2.waitKey(0)
