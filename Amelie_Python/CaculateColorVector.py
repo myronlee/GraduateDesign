@@ -72,6 +72,7 @@ def get_color_feature(image_path):
         W = 9*H + 3*S + V
         assert W < 72
         wl[W] = wl[W] + count
+
         for i in xrange(count):
             for_show.append(W)
 
