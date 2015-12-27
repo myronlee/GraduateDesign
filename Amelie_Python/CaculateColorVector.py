@@ -5,6 +5,9 @@ from matplotlib import pyplot as plt
 import cv2
 import datetime
 from PIL import ImageFile
+import time
+import os
+import sys
 
 
 def compress_hsv(h, s, v):
@@ -76,19 +79,43 @@ def get_color_feature(image_path):
         for i in xrange(count):
             for_show.append(W)
 
-    print wl
-    wl = normalize(wl)
     # print wl
-    plt.hist(for_show, 72, normed = True, color = 'gray')
+    wl = normalize(wl)
+    return wl
+    # print wl
+    # plt.hist(for_show, 72, normed = True, color = 'gray')
     # # plt.xlim([0,72])
     # # plt.legend(('cdf','histogram'), loc = 'upper left')
-    plt.show()
+    # plt.show()
 
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
     # # print sum(wl)
 
 if __name__ == '__main__':
-    # get_color_feature('/Users/ligang/170_0.jpg')
-    # get_color_feature('/Users/ligang/183_0.jpg')
-    get_color_feature('/Users/ligang/189_0.jpg')
+    #
+    # cf1 = get_color_feature('/Users/ligang/170_0.jpg')
+    # cf2 = get_color_feature('/Users/ligang/189_0.jpg')
+    # cf3 = get_color_feature('/Users/ligang/129_0.jpg')
+    # dis1 , dis2 = 0, 0
+    # for i in xrange(71):
+    #     dis1 += (cf1[i]-cf2[i]) * (cf1[i]-cf2[i])
+    #     dis2 += (cf1[i]-cf3[i]) * (cf1[i]-cf3[i])
+    # print dis1, dis2
+
+    workDir = '/Users/ligang/Documents/Emilie/dress'
+
+    startTime = time.time()
+    count = 0
+    cfs = []
+
+    for filename in os.listdir(workDir):
+        cf = get_color_feature(os.path.join(workDir, filename))
+        if len(cf) > 0:
+            cfs.append(cf)
+            count = count + 1
+
+    endTime = time.time()
+    useTime = endTime - startTime
+    print useTime, count
+    print sys.getsizeof(cfs)
