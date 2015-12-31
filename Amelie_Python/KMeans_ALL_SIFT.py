@@ -45,7 +45,7 @@ workDir = '/Users/ligang/Documents/Emilie/sift_dress_cutted_1'
 
 des = getAllDes(workDir)
 
-k = 100
+k = 10000
 attempts = 100
 eps = 10.0
 
@@ -58,10 +58,11 @@ useTime = endTime - startTime
 
 print('use time: ', useTime)
 
-res = getVectorFromLabelAndKpCount('/Users/ligang/Documents/Emilie/dress_cutted_1_sift_kp_count.txt', label)
-
-np.save('/Users/ligang/Documents/Emilie/dress_cutted_1_sift_center', center)
-
-resFile = open('/Users/ligang/Documents/Emilie/label.txt', 'w')
-resFile.write(str(res))
-resFile.close()
+#
+# res = getVectorFromLabelAndKpCount('/Users/ligang/Documents/Emilie/dress_cutted_1_sift_kp_count.txt', label)
+#
+# np.save('/Users/ligang/Documents/Emilie/dress_cutted_1_sift_center', center)
+#
+# resFile = open('/Users/ligang/Documents/Emilie/label.txt', 'w')
+# resFile.write(str(res))
+# resFile.close()

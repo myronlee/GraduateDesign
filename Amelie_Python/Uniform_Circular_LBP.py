@@ -37,9 +37,11 @@ def find_variations(pixel_values):
         prev = cur
     return t
 
-img = cv2.imread('/Users/ligang/139.jpg', 0)
+img_path = '/Users/ligang/Documents/Emilie/dress/79_0.jpg'
+
+img = cv2.imread(img_path, 0)
 # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-transformed_img = cv2.imread('/Users/ligang/139.jpg', 0)
+# transformed_img = cv2.imread(img_path, 0)
 # transformed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 unassigned = []
 pixel_values = set()
@@ -83,17 +85,17 @@ for x in range(0, len(img)):
 
         values = thresholded(center, pixels)
         variations = find_variations(values)
-        transformed_img.itemset((x,y), 255)
+        # transformed_img.itemset((x,y), 255)
         if variations <= 2:
             res = 0
             variating_blocks += 1
             for a in range(0, len(values)):
                 res += values[a] * 2 ** a
-            transformed_img.itemset((x,y), res)
+            # transformed_img.itemset((x,y), res)
             pixel_values.add(res)
         else:
             unassigned.append((x,y))
-    print x
+    # print x
 
 unassigned_value = len(pixel_values)
 pixel_values = sorted(pixel_values)
@@ -102,24 +104,24 @@ trans_p1_u2 = {}
 for p in range(0, len(pixel_values)):
     trans_p1_u2[pixel_values[p]] = p
 
-for r in range(0, len(transformed_img)):
-    for c in range(0, len(transformed_img[0])):
-        if (r,c) in unassigned:
-            transformed_img.itemset((r,c), unassigned_value)
-        else:
-            p1 = transformed_img[r,c]
-            transformed_img.itemset((r,c), trans_p1_u2[p1])
+# for r in range(0, len(transformed_img)):
+#     for c in range(0, len(transformed_img[0])):
+#         if (r,c) in unassigned:
+#             transformed_img.itemset((r,c), unassigned_value)
+#         else:
+#             p1 = transformed_img[r,c]
+#             transformed_img.itemset((r,c), trans_p1_u2[p1])
     
 
-cv2.imshow('image', img)
-cv2.imshow('thresholded image', transformed_img)
+# cv2.imshow('image', img)
+# cv2.imshow('thresholded image', transformed_img)
+#
+# cv2.imwrite('/Users/ligang/139_lbp.jpg', transformed_img)
 
-cv2.imwrite('/Users/ligang/139_lbp.jpg', transformed_img)
-
-hist,bins = np.histogram(transformed_img.flatten(),no_of_pixel_values + 1,[0,no_of_pixel_values])
-
-cdf = hist.cumsum()
-cdf_normalized = cdf * hist.max()/ cdf.max()
+# hist,bins = np.histogram(transformed_img.flatten(),no_of_pixel_values + 1,[0,no_of_pixel_values])
+#
+# cdf = hist.cumsum()
+# cdf_normalized = cdf * hist.max()/ cdf.max()
 
 # plt.plot(cdf_normalized, color = 'b')
 plt.show()

@@ -8,6 +8,12 @@ from PIL import ImageFile
 import time
 import os
 import sys
+import File_Operation
+
+def write_file(path, data):
+    f = open(path, 'w')
+    f.write(data)
+    f.close()
 
 
 def compress_hsv(h, s, v):
@@ -112,10 +118,12 @@ if __name__ == '__main__':
     for filename in os.listdir(workDir):
         cf = get_color_feature(os.path.join(workDir, filename))
         if len(cf) > 0:
-            cfs.append(cf)
+            cfs.append((filename, cf))
             count = count + 1
 
     endTime = time.time()
     useTime = endTime - startTime
     print useTime, count
     print sys.getsizeof(cfs)
+
+    File_Operation.write_list_to_file('/Users/ligang/Documents/cfs.txt', cfs)
